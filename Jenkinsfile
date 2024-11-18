@@ -1,17 +1,17 @@
 pipeline { 
     agent any 
     stages {
-        stage('Build') { 
+        stage('Build') {
             steps {
-                withMaven(maven : 'apache-maven-3.6.0') {
-                    sh "mvn clean"
+                script {
+                    sh 'mvn clean'
                 }
             }
         }
         stage('Test') {
             steps {
-                withMaven(maven : 'apache-maven-3.6.0') {
-                    sh "mvn package"
+                script {
+                    sh 'mvn package'
                 }
             }
         }
