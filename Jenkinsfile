@@ -25,7 +25,7 @@ pipeline {
                     sh 'git config user.email "vithurzen517@gmail.com"'
                     sh 'git tag -a $GIT_TAG -m "[Jenkins CI] New Tag"'
                     withCredentials([usernamePassword(credentialsId: 'token', usernameVariable: 'GIT_USER', passwordVariable: 'GIT_TOKEN')]) {
-                        sh "git push https://$git_user/$GIT_TOKEN@github.com/mohamed-rahmani/HelloWorldMaven.git $GIT_TAG"
+                        sh "git push https://$git_user/$GIT_TOKEN@github.com/vithurzen/HelloWorldMaven.git $GIT_TAG"
                     }
                 }
             }
