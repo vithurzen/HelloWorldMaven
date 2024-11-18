@@ -3,17 +3,16 @@ pipeline {
     stages {
         stage('Build') { 
             steps {
-                withMaven(maven : 'apache-maven-3.6.0'){
-                        sh "mvn clean"
+                withMaven(maven : 'apache-maven-3.6.0') {
+                    sh "mvn clean"
                 }
             }
         }
-        stage('Test'){
+        stage('Test') {
             steps {
-                withMaven(maven : 'apache-maven-3.6.0'){
-                        sh "mvn package"
+                withMaven(maven : 'apache-maven-3.6.0') {
+                    sh "mvn package"
                 }
-
             }
         }
         stage('Tag version. release') {
@@ -29,6 +28,5 @@ pipeline {
                 }
             }
         }
-    }    
     }
 }
