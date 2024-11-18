@@ -24,7 +24,7 @@ pipeline {
                     sh 'git config user.name "vithurzen"'
                     sh 'git config user.email "vithurzen517@gmail.com"'
                     sh 'git tag -a $GIT_TAG -m "[Jenkins CI] New Tag"'
-                    sh 'git push origin $GIT_TAG'
+                    sh 'git push https://vithurzen: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@github.com/vithurzen/HelloWorldMaven.git $GIT_TAG'
                 }
             }
         }
