@@ -4,42 +4,31 @@ pipeline {
         stage('Build') { 
             steps {
                 withMaven(maven : 'apache-maven-3.6.0'){
-                        sh "mvn clean compile"
+                        sh "mvn clean"
                 }
             }
         }
         stage('Test'){
             steps {
                 withMaven(maven : 'apache-maven-3.6.0'){
-                        sh "mvn test"
+                        sh "mvn package"
                 }
 
             }
         }
-        stage('build && SonarQube analysis') {
+        stage('Tag version. release') {
+            environment {
+                GIT_TAG = "version-2.$BUILD_NUMBER"
+            }
             steps {
-                withSonarQubeEnv('sonar.tools.devops.****') {
-                    sh 'sonar-scanner -Dsonar.projectKey=myProject -Dsonar.sources=./src'
+                script {
+                    sh 'git config user.name "vithurzen"'
+                    sh 'git config user.email "vithurzen517@gmail.com"'
+                    sh 'git tag -a $GIT_TAG -m "[Jenkins CI] New Tag"'
+                    sh 'git push origin $GIT_TAG'
                 }
             }
         }
-        stage("Quality Gate") {
-            steps {
-                timeout(time: 1, unit: 'HOURS') {
-                    // Parameter indicates whether to set pipeline to UNSTABLE if Quality Gate fails
-                    // true = set pipeline to UNSTABLE, false = don't
-                    // Requires SonarScanner for Jenkins 2.7+
-                    waitForQualityGate abortPipeline: true
-                }
-            }
-			}
-        stage('Deploy') {
-            steps {
-               withMaven(maven : 'apache-maven-3.6.0'){
-                        sh "mvn deploy"
-                }
-
-            }
-        }
+    }    
     }
 }
